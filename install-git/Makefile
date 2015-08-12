@@ -4,6 +4,7 @@ PREFIX=/usr/local
 
 usage: 
 	echo sudo time make .make.install-git
+	echo sudo time make .make.subversion-perl
 
 update-git-core:
 	sudo yum -y update git-core
@@ -15,7 +16,7 @@ remove-git:
 
 .make.pre-git-package:
 	echo need sudo
-	time yum -y install curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-ExtUtils-MakeMaker gcc; echo ES $$?
+	time yum -y install curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-ExtUtils-MakeMaker gcc
 	date > .make.pre-git-package
 
 .make.download-git:
@@ -36,5 +37,19 @@ remove-git:
 	echo add ${PREFIX}/bin to your PATH
 	date > .make.install-git
 
+.make.subversion-perl: 
+	echo need sudo
+	time yum -y install subversion-perl
+	date > .make.subversion-perl
+
+.make.perl-Term-ReadKey:
+	date > .make.perl-Term-ReadKey
+	echo "see http://d.hatena.ne.jp/littlebuddha/20090527/1243410035, Please enter the URL of your CPAN mirror"
+	cpan YAML
+	perl -MYAML -e '' ; echo ES $?
+	cpan Term::ReadKey
+	perl -MTerm::ReadKey -e '' ; echo ES $?
+
 clean:
-	rm -f .make.pre-git-package .make.download-git .make.unpack-git .make.install-git
+	rm -f .make.*
+
