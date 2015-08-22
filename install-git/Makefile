@@ -3,8 +3,8 @@
 PREFIX=/usr/local
 
 usage: 
-	echo sudo time make .make.install-git
-	echo sudo time make .make.subversion-perl
+	echo sudo make .make.install-git
+	echo sudo make .make.subversion-perl
 
 update-git-core:
 	sudo yum -y update git-core
@@ -12,11 +12,11 @@ update-git-core:
 
 remove-git:
 	echo need sudo
-	time yum -y remove git; echo ES $$?
+	yum -y remove git; echo ES $$?
 
 .make.pre-git-package:
 	echo need sudo
-	time yum -y install curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-ExtUtils-MakeMaker gcc
+	yum -y install curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-ExtUtils-MakeMaker gcc
 	date > .make.pre-git-package
 
 .make.download-git:
@@ -39,7 +39,7 @@ remove-git:
 
 .make.subversion-perl: 
 	echo need sudo
-	time yum -y install subversion-perl
+	yum -y install subversion-perl
 	date > .make.subversion-perl
 
 .make.perl-Term-ReadKey:
